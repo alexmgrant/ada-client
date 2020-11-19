@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { useAppDispatch } from '../../app/store';
@@ -22,7 +22,8 @@ const Search = () => {
   useEffect(() => {
     const markInstance = new Mark(document.querySelectorAll('.ada-c-card'));
     const keywordInput: any = document.querySelector("input[name='search']");
-    function performMark() {
+
+    const performMark = () => {
       if (!keywordInput) {
         return;
       }
@@ -32,7 +33,7 @@ const Search = () => {
       markInstance.unmark({
         done: () => markInstance.mark(keyword),
       });
-    }
+    };
 
     const handleSearch$ = of(inputValue)
       .pipe(
@@ -41,7 +42,6 @@ const Search = () => {
         distinctUntilChanged()
       )
       .subscribe((query) => {
-        console.log(keywordInput, document.querySelectorAll('.ada-c-card'));
         performMark();
 
         (async () => {
