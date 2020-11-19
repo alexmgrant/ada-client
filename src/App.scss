@@ -1,0 +1,14 @@
+.App {
+  display: grid;
+  display: grid;
+  grid-template-columns: repeat(12, [col-start] 1fr);
+
+  &--sidenav {
+    grid-column: col-start / span 4;
+    padding: 20px;
+  }
+  &--content {
+    grid-column: col-start 5 / span 12;
+    padding: 50px;
+  }
+}

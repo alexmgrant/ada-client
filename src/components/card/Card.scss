@@ -1,0 +1,15 @@
+.ada-c-card {
+  width: 100%;
+  padding: 16px;
+  background: #fff;
+  margin: 20px auto;
+
+  &--round {
+    border-radius: var(--border-radius);
+  }
+
+  &--secondary {
+    border-radius: var(--border-radius);
+    background-color: var(--bg-color--secondary);
+  }
+}
