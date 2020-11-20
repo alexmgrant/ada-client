@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 
-import { RootState, useAppDispatch } from '../../../../app/store';
-import { nodeUpdated, selectNodeById } from '../../../../app/nodes-slice';
+import { AppContext } from '../../../../App';
+import { RootState } from '../../../../app/store';
+import { selectNodeById } from '../../../../app/nodes-slice';
 import { NodeItem } from '../../../../app/models';
-import { getNode } from '../../../../common/api-utils';
 import { Link, Card } from '../../../../components';
 
 type NavProps = {
@@ -57,21 +57,11 @@ const ListItem = ({ onListClick, id, children }: ListItemProps) => {
 };
 
 const Nav = ({ listCollection }: NavProps) => {
-  const dispatch = useAppDispatch();
-  const [nodeId, setNodeId] = useState(1);
+  const appContext = useContext(AppContext);
+  const nodeId = appContext?.currentNodeId;
 
-  const handleSetNodeId = (id: number) => () => {
-    setNodeId(id);
-  };
-
-  useEffect(() => {
-    (async () => {
-      const response = await getNode(nodeId);
-      const { id, ...node } = response;
-
-      dispatch(nodeUpdated({ id, changes: node }));
-    })();
-  }, [nodeId]); // eslint-disable-line react-hooks/exhaustive-deps
+  const handleSetNodeId = (id: number) => () =>
+    appContext?.setCurrentNodeId(id);
 
   const navItems = listCollection.map((node) => {
     const { id, connections } = node;
@@ -79,7 +69,7 @@ const Nav = ({ listCollection }: NavProps) => {
     return (
       <ListItem onListClick={handleSetNodeId(id)} key={id} id={id}>
         <ul>
-          {isSelectedNode(connections, id, nodeId)
+          {isSelectedNode(connections, id, nodeId as number)
             ? renderConnections(connections, handleSetNodeId)
             : null}
         </ul>

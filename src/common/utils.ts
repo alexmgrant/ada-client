@@ -8,9 +8,6 @@ export const getVarFallbackRegex = /(?<=\|).*/g;
 export const getEventValue = (event: FormEvent<HTMLInputElement>): string =>
   (event.target as HTMLInputElement).value;
 
-export const getSelectedItem = (collection: any[], key: string, compare: any) =>
-  collection.filter((item: any) => item[key] === compare);
-
 export const getData = (response: AxiosResponse<any>) => response.data;
 
 export const getObjFromArray = (array: any[]) => (id: string | number) =>

@@ -16,11 +16,11 @@ enum ContentType {
 const isTypeText = (type: string) => type === ContentType.Text;
 
 const renderBodyType = (type: string) => (bodyContent: string | undefined) => {
-  return isTypeText(type) ? (
-    <>{<ParsedBody body={bodyContent as string} />}</>
-  ) : (
-    <img src={bodyContent} alt="" />
-  );
+  if (isTypeText(type)) {
+    return <ParsedBody body={bodyContent as string} />;
+  }
+
+  return <img src={bodyContent} alt="" />;
 };
 
 const Content = () => {

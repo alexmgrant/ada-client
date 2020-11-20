@@ -28,6 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "setup:dev": "yarn install && cd server && yarn install",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

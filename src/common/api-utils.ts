@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { NodeItem } from '../app/models';
-import { getSelectedItem, getData } from '../common/utils';
+import { getObjFromArray, getData } from '../common/utils';
 
 const API_URL = 'http://localhost:5000/';
 const NODES_PATH = 'nodes/';
@@ -17,9 +17,9 @@ const getNode = async (id: number) =>
     .get(`${NODES_PATH}${id}`)
     .then(getData)
     .then((data: NodeItem[]) => {
-      const selectedNode = getSelectedItem(data, 'id', id);
+      const selectedNode = getObjFromArray(data)(id);
 
-      return selectedNode ? selectedNode[0] : undefined;
+      return selectedNode ? selectedNode : undefined;
     });
 
 const getVariables = async () => await instance.get('variables').then(getData);
